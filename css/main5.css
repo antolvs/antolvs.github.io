@@ -1,0 +1,823 @@
+html * {
+   max-height: 1000000px;
+}
+
+html {
+   padding: 0px;
+   margin: 0px;
+   height: 100%;
+   overflow-y: scroll;
+}
+
+body {
+   padding: 0px;
+   margin: 0px;
+   height: 100%;
+}
+
+/* General links */
+
+a:link   {	color:#000000;}
+a:visited{	color:#37363E;}
+a:hover  {	color:#B39171;}
+
+A:hover img, A:active img 
+{
+	filter:alpha(opacity=50);   /* Internet Explorer       */
+    -moz-opacity:0.5;           /* Mozilla 1.6 and below   */
+    opacity: 0.5;               /* newer Mozilla and CSS-3 */
+}
+
+.pageShadow {
+   overflow: auto;
+   width: 100%;
+   min-height: 100%;
+   background-image: url('../images/page-shadow.png');
+   background-repeat: repeat-y;
+   background-color: #FFFFFF;
+   background-position: top center;
+}
+
+.pageContent {
+   width: 915px;
+   min-height: 100%;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   background-color: #FFFFFF;
+   display: block;
+   overflow: hidden;
+   margin: auto;
+   border: 8px solid #FFFFFF;
+   border-bottom: 0px;
+}
+
+.header {
+   width: 100%;
+   background-color: #444466;
+   height: 76px;
+   font-size: 0px;
+   overflow: hidden;
+   background-image: -ms-linear-gradient(top, #ffffff 0%, #000000 70%); /* IE10 Consumer Preview */
+   background-image: -moz-linear-gradient(top, #ffffff 0%, #000000 70%); /* Mozilla Firefox */
+   background-image: -o-linear-gradient(top, #ffffff 0%, #000000 70%); /* Opera */
+   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(0.7, #000000)); /* Webkit (Safari/Chrome 10) */
+   background-image: -webkit-linear-gradient(top, #ffffff 0%, #000000 70%); /* Webkit (Chrome 11+) */
+   background-image: linear-gradient(to bottom, #ffffff 0%, #000000 70%); /* W3C Markup, IE10 Release Preview */
+}
+
+.logo {
+   background-image: url("../images/logo.png");
+   height: 77px;
+   width: 385px;
+}
+
+.logoLink {
+   width: 468px;
+   height: 77px;
+}
+
+.navBar {
+   width: 100%;
+   background-color: #b1b1b1;
+   min-height: 34px;
+   line-height: 32px;
+   vertical-align: middle;
+   font-size: -1px;
+   margin-bottom: 8px;
+   padding-top: 2px;
+}
+
+a.navLink:link {
+   font-size: 20px;
+   font-family: Trebuchet MS;
+   font-weight: bold;
+   color: #000000;
+   text-decoration: none;
+   margin-left: 10px;
+   margin-right: 10px;
+   border: 0px;
+   top: 100px;
+}
+
+a.navLink:active {
+   color: #000000;
+}
+
+a.navLink:visited {
+   color: #000000;
+}
+
+a.navLink:hover {
+   color: #FFFFFF;
+}
+
+.twitBox {
+   float: right;
+   margin-top: 4px;
+   margin-right: 8px;
+   font-size: -1px;
+}
+
+/* Front page stuff */
+
+.newsBar {
+   max-width: 900px;
+   height: 30px;
+   background-color: #CCCCCC; /* #37363E; */
+   line-height: 30px;
+   font-family: Trebuchet MS;
+   font-weight: bold;
+   color: #000000;
+   margin-bottom: 1px;
+}
+
+.newsBarPadBox {
+   margin-left: 5px;
+   margin-right: 5px;
+}
+
+.newsPost {
+   max-width: 884px;
+   padding: 8px;
+   background-color: #EEEEEE;
+   margin-bottom: 8px;
+}
+
+.newsPreview {
+   float: left;
+   margin-right: 7px;
+}
+
+.newsPreview img {
+   width: 150px;
+   height: 150px;
+}
+
+.newsTextBox {
+   height: 150px;
+   display: table-cell;
+   vertical-align: top;
+}
+
+.newsSpacer {
+   /* vertical stick that pushes thumbnail box down */
+   float: right;
+   width: 1px;
+   height: 50px;
+}
+
+.newsThumbBox {
+   clear: right;
+   font-size: 0px;
+}
+
+.newsThumb {
+   border: 0px;
+   padding: 0px;
+   width: 100px;
+   height: 100px;
+   vertical-align: bottom;
+   font-size: 1em;
+   margin-bottom: 0px;
+   margin-left: 1px;
+   box-shadow: #000 0em 0em 0em;
+   display: inline-block;
+}
+
+.newsYearBox {
+   max-width: 678px;
+   margin-bottom: 8px;
+}
+
+.newsYearLink {
+   color: #646464;
+   font-family: arial;
+   font-size: 16px;
+   font-weight: bold;
+   text-decoration: none;
+   float: right;
+}
+
+a.newsYearLink:hover {
+   color: #B39171;
+}
+
+a.newsYearLink:visted {
+   color: #000000;
+}
+
+a.newsYearLink:active {
+   color: #B39171;
+}
+
+/* Summary Pages */
+
+.summaryBox {
+   max-width: 884px;
+   padding: 8px;
+   background-color: #EEEEEE;
+   margin-bottom: 8px;
+   min-height: 112px;
+}
+
+.summaryThumb {
+   float: left;
+   margin-right: 7px;
+}
+
+.summaryThumb img {
+   width: 112px;
+   height: 112px;
+}
+
+.summaryTitle {
+   max-width: 678px;
+   font-family: Trebuchet MS;
+   font-weight: bold;
+   color: #000000;
+   margin-bottom: 2px;
+   margin-top: -5px;
+}
+
+.summaryDate {
+   float: right;
+   font-family: Trebuchet MS;
+   font-weight: bold;
+   color: #646464;
+   margin-bottom: 2px;
+   margin-top: -5px;
+}
+
+.summaryTextBox {
+   display: table-cell;
+   vertical-align: top;
+}
+
+/* Movies */
+
+.movieBox {
+   margin: auto;
+   max-width: 899px;
+   vertical-align: top;
+   margin-bottom: 8px;
+}
+
+.ytBox {
+   background-color: #FF00FF;
+   position: relative;
+   padding-bottom: 56.25%;
+   padding-top: 0px;
+   height: 0;
+   overflow: hidden;
+}
+
+.ytBox iframe,
+.ytBox object,
+.ytBox embed {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+/* Galleries */
+
+.catBar {
+   font-size: 30px;
+   font-family: Trebuchet MS;
+   font-weight: bold;
+   color: #444466;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 5px;
+   margin-top: 15px;
+   padding-left: 0px;
+}
+
+.galleryThumb {
+   margin-bottom: 1px;
+   margin-right: 1px;
+   width: 149px;
+}
+
+.galleryThumbEnd {
+   margin-bottom: 1px;
+   margin-right: 0px;
+   width: 149px;
+}
+
+.galleryThumbBox {
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 8px;
+   font-size: 0px;
+}
+
+/* Comic/image */
+
+.mainImage {
+   border: 0px;
+   width: 100%;
+   display: table-cell;
+   /*margin-top:2px;*/
+}
+
+a:hover .mainImage, a:active .mainImage {
+   filter: alpha(opacity=100); /* Internet Explorer */
+   -moz-opacity: 1.0; /* Mozilla 1.6 and below */
+   opacity: 1.0; /* newer Mozilla and CSS-3 */
+}
+
+.shareBox {
+   margin: auto;
+   height: 17px;
+   margin-top: 1px;
+   font-size: 0px;
+}
+
+.shareImg {
+   margin-right: 1px;
+}
+
+.clear {
+   clear: both;
+}
+
+.comicNavBox {
+   margin: auto;
+   max-width: 468px;
+   text-align: center;
+   padding-top: 10px;
+}
+
+.firstButton {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-first.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.firstButton:hover {
+   background-position: 0 -92px;
+}
+
+.firstButtonGray {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-first-gray.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.prevButton {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-prev.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.prevButton:hover {
+   background-position: 0 -92px;
+}
+
+.prevButtonGray {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-prev-gray.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.stopButton {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-stop.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.stopButton:hover {
+   background-position: 0 -92px;
+}
+
+.stopButtonGray {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-stop-gray.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.nextButton {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-next.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.nextButton:hover {
+   background-position: 0 -92px;
+}
+
+.nextButtonGray {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-next-gray.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.lastButton {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-latest.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.lastButton:hover {
+   background-position: 0 -92px;
+}
+
+.lastButtonGray {
+   display: block;
+   width: 70px;
+   height: 92px;
+   background-image: url('../images/nav2-latest-gray.png');
+   text-decoration: none;
+   display: inline-block;
+}
+
+.descriptionBox {
+   color: #000000;
+   margin: auto;
+   margin-bottom: 10px;
+   margin-top: 5px;
+   max-width: 500px;
+}
+
+.descriptionPadBox {
+   margin-top: 20px;
+   margin-left: 5px;
+   margin-right: 5px;
+   margin-bottom: 5px;
+}
+
+/* Articles */
+
+.articleBox {
+   padding: 8px;
+   max-width: 668px;
+}
+
+.articleBoxWide {
+   padding-top: 8px;
+   max-width: 678px;
+}
+
+.articleBoxFull {
+   padding-top: 8px;
+   max-width: 899px;
+}
+
+.articleBox h1 {
+   font-family: arial;
+   font-weight: bold;
+   margin-top: 0px;
+   margin-bottom: 8px;
+}
+
+.articleBar {
+   max-width: 900px;
+   height: 30px;
+   background-color: #CCCCCC;
+   line-height: 30px;
+   font-family: Trebuchet MS;
+   border: 0px;
+   font-weight: bold;
+   padding-left: 7px;
+}
+
+.articleBarFull {
+   max-width: 899px;
+   height: 30px;
+   background-color: #CCCCCC;
+   line-height: 30px;
+   font-family: Trebuchet MS;
+   border: 0px;
+   font-weight: bold;
+   padding-left: 7px;
+}
+
+.articleLeft {
+   float: left;
+   margin-right: 5px;
+}
+
+.articleRight {
+   float: right;
+   margin-left: 5px;
+}
+
+.articleCaption {
+   margin-top: 3px;
+   font-size: 10px;
+   text-align: center;
+}
+
+.articleThumbBox {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
+   gap: 1px; /* Space between images */
+   margin-top: 8px;
+   max-width: 100%; /* Adjust as needed to fit the content */
+}
+
+.articleThumb {
+   width: 100%; /* Make the image take the full width of the grid cell */
+   height: auto; /* Maintain aspect ratio */
+}
+
+.downloadBox {
+   font-family: Trebuchet MS;
+   font-weight: bold;
+}
+
+.downloadBox img {
+   vertical-align: middle;
+}
+
+/* Comments */
+
+.commentHead {
+   background-color: #CCCCCC;
+   color: #000000;
+   max-width: 539px;
+   min-height: 20px;
+   margin-bottom: 1px;
+}
+
+.commentHeadAdmin {
+   background-color: #d3d0a5;
+   color: #000000;
+   max-width: 539px;
+   min-height: 20px;
+   margin-bottom: 1px;
+}
+
+a.commentAuthor {
+   color: #000000;
+   font-family: Arial;
+   font-size: 16px;
+   font-weight: bold;
+   text-decoration: none;
+   margin: 5px;
+}
+
+a.commentAuthor:hover {
+   color: #B39171;
+}
+
+a.commentAuthor:visted {
+   color: #000000;
+}
+
+a.commentAuthor:active {
+   color: #B39171;
+}
+
+.commentDate {
+   color: #646464;
+   font-family: arial;
+   font-size: 16px;
+   float: right;
+}
+
+.commentBody {
+   background-color: #EEEEEE;
+   color: #000000;
+   margin-bottom: 10px;
+   max-width: 539px;
+}
+
+.commentBodyAdmin {
+   background-color: #f5f2c7;
+   color: #000000;
+   margin-bottom: 10px;
+   max-width: 539px;
+}
+
+.commentActivityBody {
+   background-color: #EEEEEE;
+   color: #000000;
+   margin-bottom: 10px;
+   max-width: 539px;
+   min-height: 100px;
+}
+
+.commentActivityBodyAdmin {
+   background-color: #f5f2c7;
+   color: #000000;
+   margin-bottom: 10px;
+   max-width: 539px;
+   min-height: 100px;
+}
+
+.commentPadBox {
+   padding: 5px;
+   overflow: hidden;
+}
+
+.commentThumbLink {
+   float: left;
+   font-size: 0px;
+   margin-right: 0px;
+}
+
+.commentThumbLink img {
+   width: 100px;
+   height: 100px;
+}
+
+.commentFormBox {
+   width: 539px;
+   margin: auto;
+   font-size: 18px;
+   font-family: Arial;
+   font-weight: bold;
+   text-decoration: none;
+   float: left;
+}
+
+@media (max-width: 915px) {
+   .pageContent {
+       width: 468px;
+       border: 0px;
+   }
+
+   .pageShadow {
+       background-image: url('../images/page-shadow468.png');
+   }
+
+   .logo {
+       background-image: url("../images/logo-468px.png");
+       width: 468px;
+   }
+
+   .logoLink {
+       width: 468px;
+       height: 50px;
+   }
+
+   .bar {
+       display: none;
+   }
+
+   .navBar {
+       min-height: 24px;
+       line-height: 22px;
+       margin-top: 0px;
+       padding-top: 0px;
+   }
+
+   a.navLink:link {
+       font-size: 14px;
+       margin-left: 5px;
+       margin-right: 4px;
+   }
+
+   .twitBox {
+       margin-top: 0px;
+       margin-right: 0px;
+   }
+
+   /* Front page stuff */
+   .towerBox {
+       display: none;
+   }
+
+   .mobileBox {
+       margin-bottom: 8px;
+       display: block;
+   }
+
+   .leaderBox {
+       display: none;
+   }
+
+   .newsPost {
+       padding-right: 0px;
+       padding-left: 0px;
+   }
+
+   .newsTextOnly {
+       padding-left: 8px;
+       padding-right: 8px;
+   }
+
+   .newsSpacer {
+       height: 89px;
+   }
+
+   .newsThumb {
+       width: 61px;
+       height: 61px;
+   }
+
+   /* Galleries */
+   .catbar {
+       padding-left: 5px;
+   }
+
+   .galleryThumb {
+       width: 116px;
+   }
+
+   .galleryThumbEnd {
+       width: 116px;
+       margin-right: 1px;
+   }
+
+   /* Articles */
+   .articleBar {
+       border-left: 0px solid #FFFFFF;
+       border-right: 0px solid #FFFFFF;
+   }
+
+   .articleBox {
+       padding-top: 5px;
+       padding-left: 5px;
+       padding-right: 5px;
+   }
+
+   .articleBoxWide {
+       padding-left: 0px;
+       padding-right: 0px;
+   }
+
+   .articleThumbBox {
+       margin-left: 5px;
+       margin-top: 5px;
+   }
+
+   .articleThumb {
+       width: 152px;
+       height: 152px;
+   }
+
+   /* Comments */
+   .posterBox {
+       display: none;
+   }
+
+   .commentHead {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentHeadAdmin {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentBody {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentBodyAdmin {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentActivityBody {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentActivityBodyAdmin {
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+
+   .commentFormBox {
+       width: 458px;
+       border-left: 5px solid #FFFFFF;
+       border-right: 5px solid #FFFFFF;
+   }
+}
