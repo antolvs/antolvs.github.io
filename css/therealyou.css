@@ -709,7 +709,7 @@ html * {
     }
  
     .pageShadow {
-        background-image: url('../images/page-shadow468.png');
+        background-color: black;
     }
  
     .logo {
