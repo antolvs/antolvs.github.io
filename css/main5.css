@@ -224,11 +224,21 @@ a.newsYearLink:active {
 .summaryThumb {
    float: left;
    margin-right: 7px;
+   width: 112px;
+   height: 112px;
+   overflow: hidden;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .summaryThumb img {
-   width: 112px;
-   height: 112px;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
 }
 
 .summaryTitle {
