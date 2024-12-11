@@ -218,6 +218,7 @@ a.newsYearLink:active {
    padding: 8px;
    background-color: #EEEEEE;
    margin-bottom: 8px;
+   position: relative;
    min-height: 112px;
 }
 
@@ -564,12 +565,18 @@ a:hover .mainImage, a:active .mainImage {
 }
 
 .downloadBox {
-   font-family: Trebuchet MS;
-   font-weight: bold;
+   position: absolute; /* Allows precise positioning */
+   top: 50%; /* Center vertically */
+   right: 10px; /* Adjust as needed for spacing from the right edge */
+   transform: translateY(-50%); /* Align center */
+   display: flex; /* Align items if necessary */
+   justify-content: center; /* Optional if the image needs centering */
+   align-items: center; /* Optional for vertical alignment */
 }
 
 .downloadBox img {
-   vertical-align: middle;
+   max-width: 50px; /* Adjust size of the image */
+   height: auto; /* Maintain aspect ratio */
 }
 
 /* Comments */
