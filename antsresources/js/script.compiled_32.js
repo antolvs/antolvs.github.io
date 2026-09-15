@@ -971,6 +971,8 @@ function fetchListen() {
         document.getElementById("pulser").className = "inblob";
         document.getElementById("currentlylistening").innerText = "Last song:";
         document.getElementById("currentlylistening").textContent = "Last song:";
+        document.getElementById("status").innerText = "";
+        document.getElementById("status").textcontent = "";
         if (i.playedAt != null) {
           document.getElementById("lastplayed").innerText = "Played ".concat(relativeTime(new Date(i.playedAt)));
           document.getElementById("lastplayed").textContent = "Played ".concat(relativeTime(new Date(i.playedAt)));
