@@ -776,7 +776,7 @@ var navlinks = document.getElementsByClassName("navlink");
 setInterval(function () {
   if (mirror) return;
   var random = Math.floor(Math.random() * navlinks.length);
-  navlinks[random].style.color = "#2c9080";
+  navlinks[random].style.color = "#db1087";
   setTimeout(function () {
     navlinks[random].style.color = "white";
   }, 500);
