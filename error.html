@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="antsresources/css/main_9.css">
+    <link rel="icon" href="antsresources/favicon.ico">
+    <meta name="author" content="antolvs">
+    <meta name="darkreader-lock">
+
+    <title>antolvs.com</title>
+    <meta name="description" content="My website and blog.">
+    <meta name="keywords" content="antolvs, JS, JavaScript, comics, 90s, pixels">
+    <meta name="author" content="antolvs">
+    <meta name="darkreader-lock">
+
+</head>
+<body>
+    <img src="antsresources/images/bg.png" id="bg">
+    <button id="mobile-menu-toggle" type="button" aria-controls="menutd" aria-expanded="false">MENU</button>
+    <div id="mobile-menu-backdrop" hidden=""></div>
+    <div id="container">
+        <a href="/" id="logo-link">
+            <div id="logo">
+                <img src="antsresources/images/letters/logo.png" class="letter la" style="margin-right: -5px;" id="logo-d">
+            </div>
+        </a>
+        <div id="main-layout">
+            <!-- MAIN -->
+            <div id="maintd">
+
+<div class="box" id="mainbox">
+    <h2 style="display:inline">+Error!</h2><br>
+    <p>This part of the site is still being realized.</p>
+</div>
+
+            </div>
+
+            <!-- MENU -->
+            <div id="menutd" style="max-width: 225px">
+
+    <div class="box" id="linksdiv">
+    <h2 style="display:inline">+CONCEPTS</h2>
+    <br><br>
+    <a class="navlink" href="#" id="home-link">✩ Home</a><br>
+    <a class="navlink" href="/error.html" id="about-link">✩ About me</a><br>
+    <a class="navlink" href="/error.html">✩ Blog</a><br>
+    <a class="navlink" target="_blank" href="https://www.youtube.com/@branescan">✩ YouTube</a><br>
+    <a class="navlink" target="_blank" href="https://www.tiktok.com/@branescan">✩ TikTok</a><br>
+    <a class="navlink" href="https://antolvs.atabook.org/">✩ Guestbook</a><br>
+    <a class="navlink" target="_blank" href="https://x.com/calabiiyau">✩ Twitter</a><br>
+    <a class="navlink" target="_blank" href="https://steamcommunity.com/id/branescan/">✩ Steam</a><br>
+    <a class="navlink" target="_blank" href="https://instagram.com/ant.olvs">✩ Instagram</a><br>
+    <a class="navlink" target="_blank" href="https://github.com/antolvs">✩ GitHub</a><br>
+    <a class="navlink" target="_blank" href="https://www.roblox.com/users/95650986/profile">✩ ROBLOX</a><br>
+    <a class="navlink" href="/error.html">✩ Records</a><br>
+    <a class="navlink" href="/error.html">✩ Comics</a><span id="new-photos"></span><br>
+</div>
+
+            </div>
+        </div>
+        <br>
+        <footer>
+            <span id="copyright">(c) 2025-<span id="current-year">2026</span> antolvs. All Rights Reserved.</span><br>
+            <br><br>
+        </footer>
+        <br>
+    </div>
+
+    <script>
+        (() => {
+            const toggle = document.getElementById("mobile-menu-toggle");
+            const backdrop = document.getElementById("mobile-menu-backdrop");
+            if(!toggle || !backdrop) return;
+
+            const closeMenu = () => {
+                document.body.classList.remove("mobile-menu-open");
+                toggle.setAttribute("aria-expanded", "false");
+                backdrop.hidden = true;
+            };
+
+            const setMenuOpen = open => {
+                document.body.classList.toggle("mobile-menu-open", open);
+                toggle.setAttribute("aria-expanded", open ? "true" : "false");
+                backdrop.hidden = !open;
+            };
+
+            toggle.addEventListener("click", () => {
+                setMenuOpen(!document.body.classList.contains("mobile-menu-open"));
+            });
+            backdrop.addEventListener("click", closeMenu);
+            document.addEventListener("keydown", e => {
+                if(e.key === "Escape") closeMenu();
+            });
+            window.addEventListener("resize", () => {
+                if(window.innerWidth > 920) closeMenu();
+            });
+        })();
+    </script>
+
+</body></html>
