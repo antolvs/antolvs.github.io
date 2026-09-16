@@ -768,7 +768,8 @@ if (!isSlow) {
   }, 2500);
 }
 if (isSlow) {
-  document.getElementById("cool-sites").style.display = "none";
+  var coolSitesEl = document.getElementById("cool-sites");
+  if (coolSitesEl) coolSitesEl.style.display = "none";
 }
 
 // Random link blinking
