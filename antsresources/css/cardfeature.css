@@ -75,6 +75,7 @@
     z-index: 1001;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    align-items: start;
     gap: 10px;
     background: rgb(84,92,97);
     background: radial-gradient(circle, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
@@ -100,12 +101,9 @@
 
 .card3d.zoomed {
     position: absolute;
-    inset: 0;
-    margin: auto;
-    width: min(70%, 320px);
-    max-height: 85%;
     z-index: 100;
     cursor: zoom-out;
+    transition: width 0.4s ease, left 0.4s ease, top 0.4s ease;
 }
 
 .card3d.zoom-source-hidden {

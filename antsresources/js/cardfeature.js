@@ -1,9 +1,9 @@
-// Card tilt and the holographic foil overlay on .holo cards are handled in cards.html (<hover-tilt> Web Component (loaded via CDN)
+// Card tilt/glare/shadow, AND the holographic foil overlay on .holo cards are both handled entirely by the <hover-tilt> Web Component
 
-// 3 rows x 3 columns
-var CARDS_PER_PAGE = 9;
 
-// tracks filter and total cards per page
+var CARDS_PER_PAGE = 9; // 3 rows x 3 columns
+
+// Tracks the current filter + page per card-set, keyed by set id
 var setState = {};
 
 function getState(setEl) {
@@ -63,7 +63,7 @@ function renderPagination(setEl, totalPages, currentPage) {
   }
 }
 
-// nav switching
+// Top-level tab switching (Magic / Pokemon / Yu-Gi-Oh)
 var cardSets = document.querySelectorAll('.card-set');
 var navLinks = document.querySelectorAll('.card-nav .navlink');
 
@@ -81,7 +81,7 @@ navLinks.forEach((link) => {
   });
 });
 
-// sub-nav switching
+// Sub-nav filtering (All / Spider-Man / Fantastic Four / Iron Man, etc)
 var subNavLinks = document.querySelectorAll('.card-subnav .navlink');
 
 subNavLinks.forEach((link) => {
@@ -100,35 +100,45 @@ subNavLinks.forEach((link) => {
   });
 });
 
-// initial render for every set, so pagination controls exist from page load
+// Initial render for every set, so pagination controls exist from page load
 cardSets.forEach(function (setEl) {
   renderSet(setEl);
 });
 
-// click to zoom, renders original card invisible, zooms a duplicate of the card in
-function animateFlip(el, startRect, onDone) {
-  var endRect = el.getBoundingClientRect();
 
-  var deltaX = (startRect.left + startRect.width / 2) - (endRect.left + endRect.width / 2);
-  var deltaY = (startRect.top + startRect.height / 2) - (endRect.top + endRect.height / 2);
-  var scaleX = startRect.width / endRect.width;
-  var scaleY = startRect.height / endRect.height;
+function rectRelativeTo(rect, containerRect) {
+  return {
+    left: rect.left - containerRect.left,
+    top: rect.top - containerRect.top,
+    width: rect.width,
+    height: rect.height
+  };
+}
 
-  el.style.transition = 'none';
-  el.style.transform = 'translate(' + deltaX + 'px, ' + deltaY + 'px) scale(' + scaleX + ', ' + scaleY + ')';
+function animateBox(clone, fromBox, toBox, onDone) {
+  var previousPointerEvents = clone.style.pointerEvents;
+  clone.style.pointerEvents = 'none';
 
-  // force the browser to show animation
-  el.getBoundingClientRect();
+  clone.style.transition = 'none';
+  clone.style.left = fromBox.left + 'px';
+  clone.style.top = fromBox.top + 'px';
+  clone.style.width = fromBox.width + 'px';
+
+  clone.getBoundingClientRect();
 
   requestAnimationFrame(function () {
     requestAnimationFrame(function () {
-      el.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-      el.style.transform = 'translate(0, 0) scale(1, 1)';
+      clone.style.transition = 'width 0.4s cubic-bezier(0.22, 1, 0.36, 1), left 0.4s cubic-bezier(0.22, 1, 0.36, 1), top 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+      clone.style.left = toBox.left + 'px';
+      clone.style.top = toBox.top + 'px';
+      clone.style.width = toBox.width + 'px';
     });
   });
 
-  el.addEventListener('transitionend', function handler() {
-    el.removeEventListener('transitionend', handler);
+  clone.addEventListener('transitionend', function handler(ev) {
+    if (ev.propertyName !== 'width') return; // width/left/top all finish together, only fire once
+    clone.removeEventListener('transitionend', handler);
+    clone.style.pointerEvents = previousPointerEvents;
     if (onDone) onDone();
   });
 }
@@ -137,7 +147,18 @@ function openZoom(setEl, cardEl) {
   var wrapper = setEl.querySelector('.card-grid-wrapper');
   if (!wrapper) return;
 
+  var wrapperRect = wrapper.getBoundingClientRect();
   var startRect = cardEl.getBoundingClientRect();
+  var startBox = rectRelativeTo(startRect, wrapperRect);
+
+  var aspectRatio = startRect.height / startRect.width;
+  var targetWidth = Math.min(wrapperRect.width * 0.7, 320);
+  var targetHeight = targetWidth * aspectRatio;
+  var targetBox = {
+    left: (wrapperRect.width - targetWidth) / 2,
+    top: (wrapperRect.height - targetHeight) / 2,
+    width: targetWidth
+  };
 
   var clone = cardEl.cloneNode(true);
   clone.classList.add('zoomed', 'zoom-clone');
@@ -147,7 +168,7 @@ function openZoom(setEl, cardEl) {
   wrapper.appendChild(clone);
   wrapper.classList.add('has-zoomed');
 
-  animateFlip(clone, startRect);
+  animateBox(clone, startBox, targetBox);
 }
 
 function closeZoom(setEl, instant) {
@@ -169,30 +190,14 @@ function closeZoom(setEl, instant) {
     return;
   }
 
-  // animation back to the clone
-  var targetRect = original ? original.getBoundingClientRect() : wrapper.getBoundingClientRect();
+  var wrapperRect = wrapper.getBoundingClientRect();
   var currentRect = clone.getBoundingClientRect();
+  var currentBox = rectRelativeTo(currentRect, wrapperRect);
 
-  var deltaX = (targetRect.left + targetRect.width / 2) - (currentRect.left + currentRect.width / 2);
-  var deltaY = (targetRect.top + targetRect.height / 2) - (currentRect.top + currentRect.height / 2);
-  var scaleX = targetRect.width / currentRect.width;
-  var scaleY = targetRect.height / currentRect.height;
+  var targetRect = original ? original.getBoundingClientRect() : wrapper.getBoundingClientRect();
+  var targetBox = rectRelativeTo(targetRect, wrapperRect);
 
-  clone.style.transition = 'none';
-  clone.style.transform = 'translate(0, 0) scale(1, 1)';
-  clone.getBoundingClientRect();
-
-  requestAnimationFrame(function () {
-    requestAnimationFrame(function () {
-      clone.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-      clone.style.transform = 'translate(' + deltaX + 'px, ' + deltaY + 'px) scale(' + scaleX + ', ' + scaleY + ')';
-    });
-  });
-
-  clone.addEventListener('transitionend', function handler() {
-    clone.removeEventListener('transitionend', handler);
-    finish();
-  });
+  animateBox(clone, currentBox, targetBox, finish);
 }
 
 cardSets.forEach(function (setEl) {
@@ -202,7 +207,6 @@ cardSets.forEach(function (setEl) {
   wrapper.addEventListener('click', function (ev) {
     var clone = wrapper.querySelector('.card3d.zoom-clone');
 
-    // clicking on the zoomed card or background will unzoom the card
     if (clone) {
       closeZoom(setEl);
       return;
