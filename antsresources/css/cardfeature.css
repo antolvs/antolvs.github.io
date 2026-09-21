@@ -1,0 +1,170 @@
+.card-nav {
+    display: flex;
+    gap: 20px;
+    margin: 10px 0 15px;
+}
+
+.card-nav .navlink.active {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+.card-subheader {
+    display: inline-block;
+    margin: 5px 0 10px;
+    color: #f84791;
+    animation: subnavSlideFade 0.4s ease-out;
+}
+
+@keyframes subnavSlideFade {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-subnav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    animation: subnavSlideFade 0.4s ease-out;
+}
+
+.card-subnav .navlink.active {
+    color: #f84791;
+    text-decoration: underline;
+}
+
+.card-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.card-pagination button {
+    background: none;
+    border: 1px solid var(--link-color);
+    color: white;
+    font-family: inherit;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.card-pagination button.active {
+    background: var(--link-color);
+    color: black;
+}
+
+.card-set {
+    display: none;
+}
+
+.card-set.active {
+    display: block;
+}
+
+.card-grid-wrapper {
+    position: relative;
+    z-index: 1001;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background: rgb(84,92,97);
+    background: radial-gradient(circle, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+    padding: 15px;
+    border-radius: 4px;
+    overflow: visible;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.card3d {
+    margin: 0;
+    position: relative;
+    animation: cardFadeIn 0.35s ease-out;
+}
+
+.card3d.zoomed {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: min(70%, 320px);
+    max-height: 85%;
+    z-index: 100;
+    cursor: zoom-out;
+}
+
+.card3d.zoom-source-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card-grid-wrapper.has-zoomed .card3d:not(.zoomed):not(.zoom-source-hidden) {
+    opacity: 0.12;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.holo::part(tilt)::before {
+    --holo-rainbow: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgb(0, 231, 255) 25%,
+        transparent 47%,
+        transparent 53%,
+        rgb(255, 0, 231) 75%,
+        transparent 100%
+    );
+    --holo-sparkles: url(https://assets.codepen.io/13471/sparkles.gif);
+    --holo-offset: calc(50% + var(--hover-tilt-x, 0) * 20px) calc(50% + var(--hover-tilt-y, 0) * 20px);
+
+    background-image: var(--holo-rainbow), var(--holo-sparkles), var(--hover-tilt-default-gradient);
+    background-size: 300% 300%, 160%, cover;
+    background-position: var(--holo-offset), var(--holo-offset), center;
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-blend-mode: color-burn, color-dodge;
+    opacity: 0.9;
+    will-change: background-image, background-position, opacity;
+}
+
+hover-tilt,
+hover-tilt::part(container),
+hover-tilt::part(tilt) {
+    border-radius: 4.55% / 3.5%;
+}
+
+.card3d img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4.55% / 3.5%;
+}
+
+hover-tilt {
+    position: relative;
+}
+
+hover-tilt:hover {
+    z-index: 10;
+}
+
+@media screen and (max-width: 920px) {
+    .card-grid-wrapper {
+        gap: 6px;
+        padding: 8px;
+    }
+}
