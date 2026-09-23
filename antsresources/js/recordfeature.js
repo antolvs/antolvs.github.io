@@ -63,6 +63,7 @@ function animateRecordBox(clone, fromBox, toBox, onDone) {
   clone.style.top = fromBox.top + 'px';
   clone.style.width = fromBox.width + 'px';
 
+  // Force the browser to actually paint the line above before animating
   clone.getBoundingClientRect();
 
   requestAnimationFrame(function () {
@@ -82,7 +83,6 @@ function animateRecordBox(clone, fromBox, toBox, onDone) {
 }
 
 var VINYL_IMAGE_SRC = 'antsresources/images/records/vinyl-record.png';
-var ALBUM_AUDIO_SRC = 'antsresources/records/audio/preview.mp3';
 var currentAlbumAudio = null;
 
 function openRecordZoom(recordEl) {
@@ -104,6 +104,7 @@ function openRecordZoom(recordEl) {
   var clone = recordEl.cloneNode(true);
   clone.classList.add('zoomed', 'zoom-clone');
   clone._zoomOriginal = recordEl;
+  clone._audioSrc = recordEl.getAttribute('data-audio');
 
   // Tag the cover image and add a hidden vinyl layer behind it
   var coverImg = clone.querySelector('img');
@@ -141,12 +142,19 @@ function playVinylReveal(clone) {
     slideWrapper.removeEventListener('transitionend', handler);
     vinylImg.classList.add('spinning');
 
-    currentAlbumAudio = new Audio(ALBUM_AUDIO_SRC);
+    if (!clone._audioSrc) return; // this record has no audio clip set yet
+
+    currentAlbumAudio = new Audio(clone._audioSrc);
     currentAlbumAudio.loop = false; // play once, then stop
-    currentAlbumAudio.play().catch(function () {
-      document.addEventListener('click', function onceClick() {
-        if (currentAlbumAudio) currentAlbumAudio.play();
-      }, { once: true });
+    currentAlbumAudio.volume = 0.05;
+    currentAlbumAudio.play().catch(function (err) {
+      if (err && err.name === 'NotAllowedError') {
+        document.addEventListener('click', function onceClick() {
+          if (currentAlbumAudio) currentAlbumAudio.play();
+        }, { once: true });
+      } else {
+        console.error('Record audio failed to play:', clone._audioSrc, err);
+      }
     });
   });
 }
@@ -161,8 +169,7 @@ function reverseVinylReveal(clone, onDone) {
     if (onDone) onDone();
     return;
   }
-
-  // Freeze the spin at whatever angle it's currently at
+  
   if (vinylImg.classList.contains('spinning')) {
     var computedTransform = getComputedStyle(vinylImg).transform;
     vinylImg.classList.remove('spinning');
