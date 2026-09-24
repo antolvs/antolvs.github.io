@@ -89,15 +89,25 @@ function openRecordZoom(recordEl) {
   if (!recordWrapper) return;
 
   var wrapperRect = recordWrapper.getBoundingClientRect();
+  var wrapperStyle = getComputedStyle(recordWrapper);
+  var paddingLeft = parseFloat(wrapperStyle.paddingLeft) || 0;
+  var paddingTop = parseFloat(wrapperStyle.paddingTop) || 0;
+  var innerWidth = wrapperRect.width - paddingLeft - (parseFloat(wrapperStyle.paddingRight) || 0);
+  var innerHeight = wrapperRect.height - paddingTop - (parseFloat(wrapperStyle.paddingBottom) || 0);
+
   var startRect = recordEl.getBoundingClientRect();
   var startBox = rectRelativeTo(startRect, wrapperRect);
 
   var aspectRatio = startRect.height / startRect.width;
-  var targetWidth = Math.min(wrapperRect.width * 0.7, 320);
+
+  var maxWidthForVinyl = innerWidth / 1.5;
+  var maxWidthFromHeight = (innerHeight * 0.9) / aspectRatio;
+  var targetWidth = Math.min(innerWidth * 0.7, maxWidthForVinyl, maxWidthFromHeight, 320);
   var targetHeight = targetWidth * aspectRatio;
+
   var targetBox = {
-    left: (wrapperRect.width - targetWidth) / 2,
-    top: (wrapperRect.height - targetHeight) / 2,
+    left: paddingLeft + (innerWidth - targetWidth) / 2,
+    top: paddingTop + (innerHeight - targetHeight) / 2,
     width: targetWidth
   };
 
@@ -146,8 +156,9 @@ function playVinylReveal(clone) {
 
     currentAlbumAudio = new Audio(clone._audioSrc);
     currentAlbumAudio.loop = false; // play once, then stop
-    currentAlbumAudio.volume = 0.05;
+    currentAlbumAudio.volume = 0.25;
     currentAlbumAudio.play().catch(function (err) {
+
       if (err && err.name === 'NotAllowedError') {
         document.addEventListener('click', function onceClick() {
           if (currentAlbumAudio) currentAlbumAudio.play();
@@ -165,11 +176,11 @@ function reverseVinylReveal(clone, onDone) {
   var vinylImg = clone.querySelector('.vinyl-spin-img');
 
   if (!cover || !slideWrapper || !vinylImg || !slideWrapper.classList.contains('slide-out')) {
-    // Vinyl was never revealed
+    // Vinyl was never revealed (closed before the reveal finished)
     if (onDone) onDone();
     return;
   }
-  
+
   if (vinylImg.classList.contains('spinning')) {
     var computedTransform = getComputedStyle(vinylImg).transform;
     vinylImg.classList.remove('spinning');

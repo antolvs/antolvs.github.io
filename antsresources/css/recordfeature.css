@@ -42,6 +42,11 @@
     z-index: 10;
 }
 
+.record-item.zoomed:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 .record-item.zoomed {
     position: absolute;
     z-index: 100;
@@ -130,5 +135,13 @@
     .record-grid-wrapper {
         gap: 6px;
         padding: 8px;
+    }
+
+    .record-cover-img.shift-left {
+        transform: translateX(-12%);
+    }
+
+    .vinyl-slide-wrapper.slide-out {
+        transform: translateX(35%);
     }
 }
