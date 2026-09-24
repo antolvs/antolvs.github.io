@@ -62,8 +62,6 @@ function animateRecordBox(clone, fromBox, toBox, onDone) {
   clone.style.left = fromBox.left + 'px';
   clone.style.top = fromBox.top + 'px';
   clone.style.width = fromBox.width + 'px';
-
-  // Force the browser to actually paint the line above before animating
   clone.getBoundingClientRect();
 
   requestAnimationFrame(function () {
@@ -76,7 +74,7 @@ function animateRecordBox(clone, fromBox, toBox, onDone) {
   });
 
   clone.addEventListener('transitionend', function handler(ev) {
-    if (ev.propertyName !== 'width') return; // width/left/top finish together; only fire once
+    if (ev.propertyName !== 'width') return; // width/left/top finish together
     clone.removeEventListener('transitionend', handler);
     if (onDone) onDone();
   });
