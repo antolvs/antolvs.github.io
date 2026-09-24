@@ -156,7 +156,7 @@ function playVinylReveal(clone) {
 
     currentAlbumAudio = new Audio(clone._audioSrc);
     currentAlbumAudio.loop = false; // play once, then stop
-    currentAlbumAudio.volume = 0.25;
+    currentAlbumAudio.volume = 0.05;
     currentAlbumAudio.play().catch(function (err) {
 
       if (err && err.name === 'NotAllowedError') {
