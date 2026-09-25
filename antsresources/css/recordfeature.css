@@ -1,3 +1,35 @@
+@keyframes subnavSlideFade {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.record-subheader {
+    display: inline-block;
+    margin: 5px 0 10px;
+    color: #f84791;
+    animation: subnavSlideFade 0.4s ease-out;
+}
+
+.record-subnav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    animation: subnavSlideFade 0.4s ease-out;
+}
+
+.record-subnav .navlink.active {
+    color: #f84791;
+    text-decoration: underline;
+}
+
 .record-grid-wrapper {
     position: relative;
     z-index: 1001;
@@ -47,6 +79,10 @@
     box-shadow: none;
 }
 
+/* ===== Click-to-zoom (centers the clicked album within its grid box) =====
+   The original stays in its grid cell (invisible) so the layout never
+   reflows. A clone is what actually animates to the center. */
+
 .record-item.zoomed {
     position: absolute;
     z-index: 100;
@@ -65,6 +101,8 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
+
+/* ===== Vinyl reveal (plays once the zoom-in animation finishes) ===== */
 
 .record-cover-img {
     position: relative;

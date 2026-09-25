@@ -30,7 +30,8 @@
 .card-subnav {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 10px 15px;
     font-size: 12px;
     margin-bottom: 15px;
     animation: subnavSlideFade 0.4s ease-out;
