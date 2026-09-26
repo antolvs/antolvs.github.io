@@ -1,15 +1,15 @@
-.card-nav {
+.comic-nav {
     display: flex;
     gap: 20px;
     margin: 10px 0 15px;
 }
 
-.card-nav .navlink.active {
+.comic-nav .navlink.active {
     color: var(--link-color);
     text-decoration: underline;
 }
 
-.card-subheader {
+.comic-subheader {
     display: inline-block;
     margin: 5px 0 10px;
     color: #f84791;
@@ -27,7 +27,7 @@
     }
 }
 
-.card-subnav {
+.comic-subnav {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -37,19 +37,19 @@
     animation: subnavSlideFade 0.4s ease-out;
 }
 
-.card-subnav .navlink.active {
+.comic-subnav .navlink.active {
     color: #f84791;
     text-decoration: underline;
 }
 
-.card-pagination {
+.comic-pagination {
     display: flex;
     justify-content: center;
     gap: 8px;
     margin-top: 15px;
 }
 
-.card-pagination button {
+.comic-pagination button {
     background: none;
     border: 1px solid var(--link-color);
     color: white;
@@ -58,20 +58,20 @@
     cursor: pointer;
 }
 
-.card-pagination button.active {
+.comic-pagination button.active {
     background: var(--link-color);
     color: black;
 }
 
-.card-set {
+.comic-set {
     display: none;
 }
 
-.card-set.active {
+.comic-set.active {
     display: block;
 }
 
-.card-grid-wrapper {
+.comic-grid-wrapper {
     position: relative;
     z-index: 1001;
     display: grid;
@@ -85,7 +85,7 @@
     overflow: visible;
 }
 
-@keyframes cardFadeIn {
+@keyframes comicFadeIn {
     from {
         opacity: 0;
     }
@@ -94,63 +94,41 @@
     }
 }
 
-.card3d {
+.comic3d {
     margin: 0;
     position: relative;
-    animation: cardFadeIn 0.35s ease-out;
+    animation: comicFadeIn 0.35s ease-out;
 }
 
-.card3d.zoomed {
+.comic3d.zoomed {
     position: absolute;
     z-index: 100;
     cursor: zoom-out;
     transition: width 0.4s ease, left 0.4s ease, top 0.4s ease;
 }
 
-.card3d.zoom-source-hidden {
+.comic3d.zoom-source-hidden {
     opacity: 0;
     pointer-events: none;
 }
 
-.card-grid-wrapper.has-zoomed .card3d:not(.zoomed):not(.zoom-source-hidden) {
+.comic-grid-wrapper.has-zoomed .comic3d:not(.zoomed):not(.zoom-source-hidden) {
     opacity: 0.12;
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
-.holo::part(tilt)::before {
-    --holo-rainbow: linear-gradient(
-        115deg,
-        transparent 0%,
-        rgb(0, 231, 255) 25%,
-        transparent 47%,
-        transparent 53%,
-        rgb(255, 0, 231) 75%,
-        transparent 100%
-    );
-    --holo-sparkles: url(https://assets.codepen.io/13471/sparkles.gif);
-    --holo-offset: calc(50% + var(--hover-tilt-x, 0) * 20px) calc(50% + var(--hover-tilt-y, 0) * 20px);
-
-    background-image: var(--holo-rainbow), var(--holo-sparkles), var(--hover-tilt-default-gradient);
-    background-size: 300% 300%, 160%, cover;
-    background-position: var(--holo-offset), var(--holo-offset), center;
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-blend-mode: color-burn, color-dodge;
-    opacity: 0.9;
-    will-change: background-image, background-position, opacity;
-}
-
 hover-tilt,
 hover-tilt::part(container),
 hover-tilt::part(tilt) {
-    border-radius: 4.55% / 3.5%;
+    border-radius: 2px;
 }
 
-.card3d img {
+.comic3d img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4.55% / 3.5%;
+    border-radius: 2px;
 }
 
 hover-tilt {
@@ -162,18 +140,18 @@ hover-tilt:hover {
 }
 
 @media screen and (max-width: 920px) {
-    .card-grid-wrapper {
+    .comic-grid-wrapper {
         gap: 6px;
         padding: 8px;
     }
 }
 
 @media (hover: none) and (pointer: coarse) {
-    .card-grid-wrapper .card3d:not(.zoomed) hover-tilt {
+    .comic-grid-wrapper .comic3d:not(.zoomed) hover-tilt {
         touch-action: pan-y;
     }
 
-    .card-grid-wrapper .card3d.zoomed hover-tilt {
+    .comic-grid-wrapper .comic3d.zoomed hover-tilt {
         touch-action: none;
     }
 }
