@@ -1,9 +1,33 @@
-// Tilt/glare/shadow on comic covers is handled entirely by the <hover-tilt> Web Component
-
-
 var COMICS_PER_PAGE = 9; // 3 rows x 3 columns
 
-// Tracks the current filter + page per comic-set, keyed by set id
+var IS_TOUCH = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+var COMIC_TILT_ATTRS = { shadow: '', 'scale-factor': '1.08', 'tilt-factor': '1.2' };
+
+function stripGridTilt() {
+  if (!IS_TOUCH) return;
+  document.querySelectorAll('.comic-grid-wrapper hover-tilt').forEach(function (ht) {
+    var img = ht.querySelector('img');
+    if (!img) return;
+    var holder = document.createElement('div');
+    holder.className = 'comic-tilt-off';
+    holder.appendChild(img);
+    ht.replaceWith(holder);
+  });
+}
+
+function reviveTilt(clone) {
+  if (!IS_TOUCH) return;
+  var holder = clone.querySelector('.comic-tilt-off');
+  if (!holder) return;
+  var img = holder.querySelector('img');
+  var ht = document.createElement('hover-tilt');
+  Object.keys(COMIC_TILT_ATTRS).forEach(function (attr) {
+    ht.setAttribute(attr, COMIC_TILT_ATTRS[attr]);
+  });
+  ht.appendChild(img);
+  holder.replaceWith(ht);
+}
+
 var setState = {};
 
 function getState(setEl) {
@@ -81,7 +105,7 @@ navLinks.forEach((link) => {
   });
 });
 
-// Sub-nav filtering (Spider-Man / Daredevil / X-Men / Fantastic Four, etc)
+// Sub-nav filtering
 var subNavLinks = document.querySelectorAll('.comic-subnav .navlink');
 
 subNavLinks.forEach((link) => {
@@ -101,7 +125,8 @@ subNavLinks.forEach((link) => {
   });
 });
 
-// Initial render for every set, so pagination controls exist from page load
+stripGridTilt();
+
 comicSets.forEach(function (setEl) {
   renderSet(setEl);
 });
@@ -164,6 +189,7 @@ function openZoom(setEl, comicEl) {
   var clone = comicEl.cloneNode(true);
   clone.classList.add('zoomed', 'zoom-clone');
   clone._zoomOriginal = comicEl;
+  reviveTilt(clone);
 
   comicEl.classList.add('zoom-source-hidden');
   wrapper.appendChild(clone);
