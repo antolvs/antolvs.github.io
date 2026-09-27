@@ -178,9 +178,6 @@ function openRecordZoom(recordEl) {
   slideWrapper.appendChild(vinylImg);
   clone.appendChild(slideWrapper);
 
-  // Song name + an optional short note, faded in once zoomed. Only
-  // records with a `data-song` set show a caption at all -- if there's
-  // no song attached, there's nothing playing to caption.
   var songTitle = recordEl.getAttribute('data-song');
   if (songTitle) {
     var caption = document.createElement('div');
@@ -216,8 +213,7 @@ function showCaption(clone) {
   var caption = clone.querySelector('.record-caption');
   if (!caption) return;
 
-  // Force the browser to register the starting (hidden) state before
-  // adding "visible", or the opacity/transform transition gets skipped.
+
   requestAnimationFrame(function () {
     requestAnimationFrame(function () {
       caption.classList.add('visible');
@@ -263,7 +259,7 @@ function reverseVinylReveal(clone, onDone) {
   var vinylImg = clone.querySelector('.vinyl-spin-img');
 
   if (!cover || !slideWrapper || !vinylImg || !slideWrapper.classList.contains('slide-out')) {
-    // Vinyl was never revealed (closed before the reveal finished)
+    // Vinyl was never revealed
     if (onDone) onDone();
     return;
   }
