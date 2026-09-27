@@ -42,10 +42,6 @@
     border-radius: 4px;
 }
 
-/* Invisible filler cells so a page with fewer than 9 records still lays
-   out a full 3x3 grid -- keeps the wrapper's height (and therefore the
-   click-to-zoom target size, which is calculated from it) consistent
-   whether a page/filter has 1 row or 3. */
 .record-item-placeholder {
     aspect-ratio: 1 / 1;
     visibility: hidden;
@@ -89,10 +85,6 @@
     box-shadow: none;
 }
 
-/* ===== Click-to-zoom (centers the clicked album within its grid box) =====
-   The original stays in its grid cell (invisible) so the layout never
-   reflows. A clone is what actually animates to the center. */
-
 .record-item.zoomed {
     position: absolute;
     z-index: 100;
@@ -111,8 +103,6 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
-
-/* ===== Vinyl reveal (plays once the zoom-in animation finishes) ===== */
 
 .record-cover-img {
     position: relative;
@@ -158,8 +148,6 @@
     }
 }
 
-/* ===== Song caption (fades in once the zoom-in animation finishes) ===== */
-
 .record-caption {
     position: relative;
     z-index: 3;
@@ -193,6 +181,12 @@
     justify-content: center;
     gap: 8px;
     margin-top: 15px;
+    transition: opacity 0.25s ease;
+}
+
+.record-grid-wrapper.has-zoomed + .record-pagination {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .record-pagination button {
