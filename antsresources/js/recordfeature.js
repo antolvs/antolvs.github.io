@@ -1,4 +1,5 @@
 var RECORDS_PER_PAGE = 9; // 3 rows x 3 columns
+var PLACEHOLDER_CLASS = 'record-item-placeholder';
 
 var recordWrapper = document.querySelector('.record-grid-wrapper');
 var recordPaginationEl = document.querySelector('.record-pagination');
@@ -8,6 +9,28 @@ var recordFilter = (function () {
   var activeLink = document.querySelector('.record-subnav .navlink.active');
   return activeLink ? activeLink.getAttribute('data-filter') : null;
 })();
+
+function ensurePlaceholders() {
+  if (!recordWrapper) return;
+  var existing = recordWrapper.querySelectorAll('.' + PLACEHOLDER_CLASS).length;
+  for (var i = existing; i < RECORDS_PER_PAGE; i++) {
+    var placeholder = document.createElement('div');
+    placeholder.className = PLACEHOLDER_CLASS;
+    placeholder.setAttribute('aria-hidden', 'true');
+    recordWrapper.appendChild(placeholder);
+  }
+}
+
+function updateGridPlaceholders(filledCount) {
+  if (!recordWrapper) return;
+  var needed = Math.max(0, RECORDS_PER_PAGE - filledCount);
+  var placeholders = recordWrapper.querySelectorAll('.' + PLACEHOLDER_CLASS);
+  placeholders.forEach(function (ph, i) {
+    ph.style.display = i < needed ? '' : 'none';
+  });
+}
+
+ensurePlaceholders();
 
 function renderRecords() {
   if (!recordWrapper) return;
@@ -31,6 +54,8 @@ function renderRecords() {
   allRecords.forEach(function (record) {
     record.style.display = visibleSlice.indexOf(record) !== -1 ? '' : 'none';
   });
+
+  updateGridPlaceholders(visibleSlice.length);
 
   renderRecordPagination(totalPages);
 }
@@ -153,12 +178,50 @@ function openRecordZoom(recordEl) {
   slideWrapper.appendChild(vinylImg);
   clone.appendChild(slideWrapper);
 
+  // Song name + an optional short note, faded in once zoomed. Only
+  // records with a `data-song` set show a caption at all -- if there's
+  // no song attached, there's nothing playing to caption.
+  var songTitle = recordEl.getAttribute('data-song');
+  if (songTitle) {
+    var caption = document.createElement('div');
+    caption.className = 'record-caption';
+
+    var titleEl = document.createElement('div');
+    titleEl.className = 'record-caption-title';
+    titleEl.textContent = songTitle;
+    caption.appendChild(titleEl);
+
+    var note = recordEl.getAttribute('data-note');
+    if (note) {
+      var noteEl = document.createElement('div');
+      noteEl.className = 'record-caption-note';
+      noteEl.textContent = note;
+      caption.appendChild(noteEl);
+    }
+
+    clone.appendChild(caption);
+  }
+
   recordEl.classList.add('zoom-source-hidden');
   recordWrapper.appendChild(clone);
   recordWrapper.classList.add('has-zoomed');
 
   animateRecordBox(clone, startBox, targetBox, function () {
     playVinylReveal(clone);
+    showCaption(clone);
+  });
+}
+
+function showCaption(clone) {
+  var caption = clone.querySelector('.record-caption');
+  if (!caption) return;
+
+  // Force the browser to register the starting (hidden) state before
+  // adding "visible", or the opacity/transform transition gets skipped.
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      caption.classList.add('visible');
+    });
   });
 }
 
@@ -179,9 +242,10 @@ function playVinylReveal(clone) {
     if (!clone._audioSrc) return; // this record has no audio clip set yet
 
     currentAlbumAudio = new Audio(clone._audioSrc);
-    currentAlbumAudio.loop = false; // play once, then stop
+    currentAlbumAudio.loop = false; // play once
     currentAlbumAudio.volume = 0.05;
     currentAlbumAudio.play().catch(function (err) {
+
       if (err && err.name === 'NotAllowedError') {
         document.addEventListener('click', function onceClick() {
           if (currentAlbumAudio) currentAlbumAudio.play();
@@ -224,6 +288,9 @@ function closeZoom(instant) {
   if (!recordWrapper) return;
   var clone = recordWrapper.querySelector('.record-item.zoom-clone');
   if (!clone) return;
+
+  var caption = clone.querySelector('.record-caption');
+  if (caption) caption.remove();
 
   if (currentAlbumAudio) {
     currentAlbumAudio.pause();

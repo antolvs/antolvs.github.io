@@ -42,6 +42,16 @@
     border-radius: 4px;
 }
 
+/* Invisible filler cells so a page with fewer than 9 records still lays
+   out a full 3x3 grid -- keeps the wrapper's height (and therefore the
+   click-to-zoom target size, which is calculated from it) consistent
+   whether a page/filter has 1 row or 3. */
+.record-item-placeholder {
+    aspect-ratio: 1 / 1;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 @keyframes recordFadeIn {
     from {
         opacity: 0;
@@ -146,6 +156,36 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+/* ===== Song caption (fades in once the zoom-in animation finishes) ===== */
+
+.record-caption {
+    position: relative;
+    z-index: 3;
+    margin-top: 12px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.record-caption.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.record-caption-title {
+    color: #f84791;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.record-caption-note {
+    margin-top: 4px;
+    color: #cccccc;
+    font-size: 12px;
 }
 
 .record-pagination {
