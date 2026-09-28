@@ -173,7 +173,17 @@ function openRecordZoom(recordEl) {
   slideWrapper.className = 'vinyl-slide-wrapper';
   var vinylImg = document.createElement('img');
   vinylImg.className = 'vinyl-spin-img';
-  vinylImg.src = VINYL_IMAGE_SRC;
+  // Per-record vinyl art via data-vinyl="path/to/image.png" on the
+  // .record-item. Empty/missing (or a broken path) falls back to the
+  // default vinyl image.
+  var customVinyl = recordEl.getAttribute('data-vinyl');
+  vinylImg.src = customVinyl || VINYL_IMAGE_SRC;
+  if (customVinyl) {
+    vinylImg.addEventListener('error', function onVinylError() {
+      vinylImg.removeEventListener('error', onVinylError);
+      vinylImg.src = VINYL_IMAGE_SRC;
+    });
+  }
   vinylImg.alt = 'Vinyl record';
   slideWrapper.appendChild(vinylImg);
   clone.appendChild(slideWrapper);
