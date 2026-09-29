@@ -170,7 +170,7 @@ hover-tilt:hover {
 
 @media (hover: none) and (pointer: coarse) {
     .card-grid-wrapper .card3d:not(.zoomed) hover-tilt {
-        touch-action: pan-y;
+        pointer-events: none;
     }
 
     .card-grid-wrapper .card3d.zoomed hover-tilt {

@@ -1,34 +1,5 @@
 var CARDS_PER_PAGE = 9; // 3 rows x 3 columns
 
-var IS_TOUCH = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-var CARD_TILT_ATTRS = { shadow: '', 'scale-factor': '1.15', 'tilt-factor': '1.2' };
-
-function stripGridTilt() {
-  if (!IS_TOUCH) return;
-  document.querySelectorAll('.card-grid-wrapper hover-tilt').forEach(function (ht) {
-    var img = ht.querySelector('img');
-    if (!img) return;
-    var holder = document.createElement('div');
-    holder.className = 'card-tilt-off';
-    holder.appendChild(img);
-    ht.replaceWith(holder);
-  });
-}
-
-function reviveTilt(clone) {
-  if (!IS_TOUCH) return;
-  var holder = clone.querySelector('.card-tilt-off');
-  if (!holder) return;
-  var img = holder.querySelector('img');
-  var ht = document.createElement('hover-tilt');
-  Object.keys(CARD_TILT_ATTRS).forEach(function (attr) {
-    ht.setAttribute(attr, CARD_TILT_ATTRS[attr]);
-  });
-  ht.appendChild(img);
-  holder.replaceWith(ht);
-}
-
-// Tracks the current filter + page per card-set, keyed by set id
 var setState = {};
 
 function getState(setEl) {
@@ -88,7 +59,6 @@ function renderPagination(setEl, totalPages, currentPage) {
   }
 }
 
-// Top-level tab switching
 var cardSets = document.querySelectorAll('.card-set');
 var navLinks = document.querySelectorAll('.card-nav .navlink');
 
@@ -125,9 +95,6 @@ subNavLinks.forEach((link) => {
   });
 });
 
-stripGridTilt();
-
-// Initial render for every set, so pagination controls exist from page load
 cardSets.forEach(function (setEl) {
   renderSet(setEl);
 });
@@ -163,7 +130,7 @@ function animateBox(clone, fromBox, toBox, onDone) {
   });
 
   clone.addEventListener('transitionend', function handler(ev) {
-    if (ev.propertyName !== 'width') return; // width/left/top all finish together, only fire once
+    if (ev.propertyName !== 'width') return;
     clone.removeEventListener('transitionend', handler);
     clone.style.pointerEvents = previousPointerEvents;
     if (onDone) onDone();
@@ -190,7 +157,6 @@ function openZoom(setEl, cardEl) {
   var clone = cardEl.cloneNode(true);
   clone.classList.add('zoomed', 'zoom-clone');
   clone._zoomOriginal = cardEl;
-  reviveTilt(clone);
 
   cardEl.classList.add('zoom-source-hidden');
   wrapper.appendChild(clone);
