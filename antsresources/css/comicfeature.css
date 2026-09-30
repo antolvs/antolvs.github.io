@@ -131,6 +131,32 @@ hover-tilt::part(tilt) {
     border-radius: 2px;
 }
 
+.comic-link {
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+.comic-link img {
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+@media (hover: hover) {
+    .comic-link:hover {
+        z-index: 10;
+    }
+
+    .comic-link:hover img {
+        transform: translateY(-4px) scale(1.04);
+        filter: brightness(1.12);
+    }
+}
+
+.comic-link:focus-visible {
+    outline: 2px solid #f84791;
+    outline-offset: 2px;
+}
+
 hover-tilt {
     position: relative;
 }

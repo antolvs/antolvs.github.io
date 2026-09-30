@@ -227,9 +227,11 @@ function closeZoom(setEl, instant) {
   animateBox(clone, currentBox, targetBox, finish);
 }
 
-comicSets.forEach(function (setEl) {
-  var wrapper = setEl.querySelector('.comic-grid-wrapper');
-  if (!wrapper) return;
+  comicSets.forEach(function (setEl) {
+    if (setEl.getAttribute('data-mode') === 'link') return; // TRADES: links, no zoom
+
+    var wrapper = setEl.querySelector('.comic-grid-wrapper');
+    if (!wrapper) return;
 
   wrapper.addEventListener('click', function (ev) {
     var clone = wrapper.querySelector('.comic3d.zoom-clone');
