@@ -770,10 +770,14 @@ marquee * {
         right: 0;
         width: min(82vw, 260px);
         max-width: none !important;
+        box-sizing: border-box;
         height: 100vh;
+        height: 100dvh;
         overflow-y: auto;
+        overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
         padding-top: 46px;
+        padding-bottom: 24px;
         background-color: #000000f2;
         border-left: 1px solid #383838;
         transform: translateX(100%);
