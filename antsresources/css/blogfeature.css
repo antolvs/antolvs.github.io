@@ -57,9 +57,11 @@
 
 .blog-photo {
     position: relative;
-    z-index: 9999;
+    z-index: 1001;
 }
 .blog-photo img {
     position: relative;
-    z-index: 9999;
+    z-index: 1001;
 }
+
+
