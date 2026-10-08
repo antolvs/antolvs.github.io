@@ -4,7 +4,7 @@
     const holder = document.getElementById("bit-holder");
     if (!holder || typeof p5 === "undefined") return;
 
-    const ASSETS   = "antsresources/bit/";
+    const ASSETS   = "/antsresources/bit/";
     // canvas height
     const REF_SIZE = 700;
     const ZOOM     = 1;
